@@ -9,7 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 import br.com.maoki.loja.dao.ClientRepository;
-import br.com.maoki.loja.dao.ProductRepository;
 import br.com.maoki.loja.entity.Client;
 
 @SpringBootApplication
@@ -17,12 +16,9 @@ import br.com.maoki.loja.entity.Client;
 @EnableAutoConfiguration
 public class LojaApplication {
 
-	@Autowired
-	private ProductRepository productRepository; 
-	
+
 	public static void main(String[] args) {
-		SpringApplication.run(LojaApplication.class, args);		 
-		
+		SpringApplication.run(LojaApplication.class, args);	
 	}
 	
 	
@@ -38,7 +34,7 @@ public class LojaApplication {
 		}
 		
 		@Autowired
-		ClientRepository clientRepository;
+		private ClientRepository clientRepository;
 		
 	}
 

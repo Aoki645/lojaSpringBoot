@@ -1,32 +1,30 @@
 package br.com.maoki.loja.entity;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
   
 @Entity
 @Table(name="Products")
-@JacksonXmlRootElement(localName = "Products")
-public class Product {
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	 @JacksonXmlProperty(isAttribute = true)
-	private long id;
+@JacksonXmlRootElement(localName = "Product")
+public class Product implements Serializable{
+	private static final long serialVersionUID = 119581862692346478L;
+
+	@Id	 
+	@JacksonXmlProperty(isAttribute = true)
+	private Long numeroControle;
 	
-	@JacksonXmlProperty   
+	@JacksonXmlProperty    
 	private Date dataCadastro;
 	@NotNull
 	@JacksonXmlProperty   
@@ -36,37 +34,43 @@ public class Product {
 	private BigDecimal valor;
 	@JacksonXmlProperty   
 	private Integer quantidade;
-	@JacksonXmlProperty   
-	@JsonBackReference
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "codigo_cliente", nullable = false)
+
+	@JacksonXmlProperty(localName ="client")   	 	 
+	@ManyToOne(optional = false)
+    @JoinColumn(name = "codigo_cliente", nullable = false) 
 	private Client client;
 	
 	
 	public Product() {		
 	}
 
-	public Product(Date dataCadastro, String nome, Integer quantidade, BigDecimal valor, Client client) {
+	public Product(Long numeroControle, Date dataCadastro, String nome, Integer quantidade, BigDecimal valor, Client client) {
 		super();
+		this.numeroControle = numeroControle;
 		this.dataCadastro = dataCadastro;
 		this.nome = nome;
 		this.quantidade = quantidade;
 		this.valor = valor;
 		this.client = client;
 	}
+	public Product(Long numeroControle, Date dataCadastro) {
+		super();
+		this.numeroControle = numeroControle;
+		this.dataCadastro = dataCadastro;
+	}
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", dataCadastro=" + dataCadastro + ", nome=" + nome + ", quantidade=" + quantidade
+		return "Product [id=" + numeroControle + ", dataCadastro=" + dataCadastro + ", nome=" + nome + ", quantidade=" + quantidade
 				+ "]";
 	}
 
-	public long getId() {
-		return id;
+	public Long getNumeroControle() {
+		return numeroControle;
 	}
 
-	public void setId(long id) {
-		this.id = id;
+	public void setNumeroControle(Long numeroControle) {
+		this.numeroControle = numeroControle;
 	}
 
 	public Date getDataCadastro() {
@@ -97,7 +101,7 @@ public class Product {
 		return quantidade;
 	}
 
-	public void setQuantidade(int quantidade) {
+	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
 
@@ -108,6 +112,7 @@ public class Product {
 	public void setClient(Client client) {
 		this.client = client;
 	}
+
 	
 	
 

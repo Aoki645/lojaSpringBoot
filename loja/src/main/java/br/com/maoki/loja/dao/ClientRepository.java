@@ -6,5 +6,5 @@ import br.com.maoki.loja.entity.Client;
 
  
 public interface ClientRepository extends JpaRepository<Client, Long>{
-	//Collection<Booking> findBookByName(String bookingName); 
+	
 }
